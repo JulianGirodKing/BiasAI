@@ -1,0 +1,34 @@
+{
+  "manifest_version": 3,
+  "name": "Bias AI",
+  "description": "Detects political bias in news articles using AI",
+  "version": "1.0",
+  "permissions": [
+    "scripting",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "icons": {
+    "128": "icons/biasicon.png"
+  },
+  "action": {
+    "default_icon": {
+      "32": "icons/biasicon.png"
+    },
+    "default_popup": "popup.html",
+    "default_title": "Bias AI"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}
