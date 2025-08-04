@@ -19,12 +19,11 @@ Analyze the following news article for political bias.
 Respond ONLY with a JSON object in this format:
 
 {
-  "verdict": "Very Liberal | Moderately Liberal | Centrist | Moderately Conservative | Very Conservative",
-  "bias_score": 0-100
+  "verdict": "Very Liberal | Moderately Liberal | Centrist | Moderately Conservative | Very Conservative"
 }
 
 Rules:
-- bias_score: 0 = Very Liberal, 100 = Very Conservative.
+
 - Do not include anything except the JSON object.
 
 Article:

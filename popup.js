@@ -25,11 +25,14 @@ document.getElementById("analyzeBtn").addEventListener("click", () => {
             const biasData = await classifyBias(articleText);
 
             if (biasData.verdict) {
-                document.getElementById("result").innerText =
-                    `Verdict: ${biasData.verdict}\nBias Score: ${biasData.bias_score}`;
+                const color = getBiasColorFromVerdict(biasData.verdict);
+
+                document.getElementById("result").innerHTML =
+                    `Verdict: <span style="color: ${color}">${biasData.verdict}</span><br>Bias Score: ${biasData.bias_score}`;
             } else {
                 document.getElementById("result").innerText = "Error: could not determine bias.";
             }
+
         });
     });
 });
@@ -43,11 +46,3 @@ async function classifyBias(articleText) {
 
     return await response.json(); // Directly return parsed object
 }
-if (biasData.verdict) {
-    const color = getBiasColorFromVerdict(biasData.verdict);
-
-    document.getElementById("result").innerText =
-        `Verdict: ${biasData.verdict}\nBias Score: ${biasData.bias_score}`;
-    document.getElementById("result").style.color = color;
-}
-
