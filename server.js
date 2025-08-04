@@ -14,17 +14,14 @@ const PORT = process.env.PORT || 3000;
 app.post('/analyze', async (req, res) => {
     const article = req.body.text;
 
-    const prompt = `
-Analyze the following news article for political bias.
-Respond ONLY with a JSON object in this format:
+    const prompt = `Analyze the following news article for political, ideological, or narrative bias.
+Identify the bias direction and strength, then give a short reason why.
 
+Return ONLY a valid JSON object with this structure:
 {
-  "verdict": "Very Liberal | Moderately Liberal | Centrist | Moderately Conservative | Very Conservative"
+  "verdict": "Very Liberal | Moderately Liberal | Centrist | Moderately Conservative | Very Conservative",
+  "explanation": "1-2 sentence explanation of why you gave this verdict."
 }
-
-Rules:
-
-- Do not include anything except the JSON object.
 
 Article:
 ${article}
@@ -51,13 +48,15 @@ ${article}
         let resultText = data.choices?.[0]?.message?.content || "{}";
 
         // Try parsing JSON from AI
-        let parsed;
+        let result;
         try {
-            parsed = JSON.parse(resultText);
-        } catch (jsonErr) {
-            console.error("Error parsing AI JSON:", jsonErr);
-            return res.status(500).json({ error: "Invalid JSON returned from AI", raw: resultText });
+            result = JSON.parse(resultText);
+        } catch (e) {
+            console.error("Failed to parse JSON:", resultText);
+            result = { verdict: "Unknown", explanation: "No explanation available." };
         }
+
+        res.json(result);
 
         res.json(parsed);
     } catch (err) {

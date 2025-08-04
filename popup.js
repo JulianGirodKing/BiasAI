@@ -28,7 +28,8 @@ document.getElementById("analyzeBtn").addEventListener("click", () => {
                 const color = getBiasColorFromVerdict(biasData.verdict);
 
                 document.getElementById("result").innerHTML =
-                    `Verdict: <span style="color: ${color}">${biasData.verdict}</span><br>Bias Score: ${biasData.bias_score}`;
+                    `Verdict: <span style="color: ${color}">${biasData.verdict}</span><br>
+         <em>${biasData.explanation}</em>`;
             } else {
                 document.getElementById("result").innerText = "Error: could not determine bias.";
             }
