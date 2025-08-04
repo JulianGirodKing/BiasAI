@@ -1,3 +1,20 @@
+function getBiasColorFromVerdict(verdict) {
+    switch (verdict) {
+        case "Very Liberal":
+            return "#00008B"; // dark blue
+        case "Moderately Liberal":
+            return "#87CEFA"; // light blue
+        case "Centrist":
+            return "#808080"; // gray
+        case "Moderately Conservative":
+            return "#FFA07A"; // light red
+        case "Very Conservative":
+            return "#8B0000"; // dark red
+        default:
+            return "#000000"; // black fallback
+    }
+}
+
 document.getElementById("analyzeBtn").addEventListener("click", () => {
     chrome.tabs.query({ active: true, currentWindow: true }, ([tab]) => {
         chrome.tabs.sendMessage(tab.id, { action: "extract_article_text" }, async (response) => {
@@ -26,3 +43,11 @@ async function classifyBias(articleText) {
 
     return await response.json(); // Directly return parsed object
 }
+if (biasData.verdict) {
+    const color = getBiasColorFromVerdict(biasData.verdict);
+
+    document.getElementById("result").innerText =
+        `Verdict: ${biasData.verdict}\nBias Score: ${biasData.bias_score}`;
+    document.getElementById("result").style.color = color;
+}
+
