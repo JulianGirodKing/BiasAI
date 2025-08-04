@@ -47,7 +47,6 @@ ${article}
         const data = await response.json();
         let resultText = data.choices?.[0]?.message?.content || "{}";
 
-        // Try parsing JSON from AI
         let result;
         try {
             result = JSON.parse(resultText);
@@ -56,9 +55,7 @@ ${article}
             result = { verdict: "Unknown", explanation: "No explanation available." };
         }
 
-        res.json(result);
-
-        res.json(parsed);
+        res.json(result); // ✅ send once
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: 'Something went wrong.' });
