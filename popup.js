@@ -2,19 +2,27 @@ document.getElementById("analyzeBtn").addEventListener("click", () => {
     chrome.tabs.query({ active: true, currentWindow: true }, ([tab]) => {
         chrome.tabs.sendMessage(tab.id, { action: "extract_article_text" }, async (response) => {
             const articleText = response?.text || "";
+            console.log("Extracted article length:", articleText.length); // Debug
+
             document.getElementById("result").innerText = "Analyzing...";
-            const bias = await classifyBias(articleText);
-            document.getElementById("result").innerText = "Bias: " + bias;
+            const biasData = await classifyBias(articleText);
+
+            if (biasData.verdict) {
+                document.getElementById("result").innerText =
+                    `Verdict: ${biasData.verdict}\nBias Score: ${biasData.bias_score}`;
+            } else {
+                document.getElementById("result").innerText = "Error: could not determine bias.";
+            }
         });
     });
 });
+
 async function classifyBias(articleText) {
-    const response = await fetch("https://your-deployed-backend.com/analyze", {
+    const response = await fetch("https://biasai-backend.onrender.com/analyze", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text: articleText })
     });
 
-    const data = await response.json();
-    return data.result || "Unknown";
+    return await response.json(); // Directly return parsed object
 }
