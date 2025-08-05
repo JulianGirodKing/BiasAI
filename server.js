@@ -5,19 +5,18 @@ app.post('/analyze', async (req, res) => {
 Identify the bias direction and strength, then give a short reason why.
 
 Respond ONLY with valid JSON inside triple backticks like this:
-\`\`\`json
+\\\`\\\`\\\`json
 {
   "verdict": "Very Liberal | Moderately Liberal | Centrist | Moderately Conservative | Very Conservative",
   "explanation": "1-2 sentence explanation of why you gave this verdict."
 }
-\`\`\`
+\\\`\\\`\\\`
 
 Do not include any text before or after the JSON.
 
 Article:
 ${article}
 `;
-
     try {
         const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
             method: "POST",
