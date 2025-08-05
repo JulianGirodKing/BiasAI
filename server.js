@@ -52,10 +52,10 @@ ${article}
 
         console.log("AI raw output:", resultText); // DEBUG
 
-        // Extract JSON if inside ```json ... ```
-        const jsonMatch = resultText.match(/```json\s*([\s\S]*?)\s*```/);
+        // Extract JSON from ```json ... ``` or just { ... }
+        const jsonMatch = resultText.match(/```json\s*([\s\S]*?)\s*```/) || resultText.match(/\{[\s\S]*\}/);
         if (jsonMatch) {
-            resultText = jsonMatch[1];
+            resultText = jsonMatch[1] || jsonMatch[0];
         }
 
         let result;
@@ -66,7 +66,9 @@ ${article}
             result = { verdict: "Unknown", explanation: "No explanation available." };
         }
 
+        // Send the parsed result back to the client
         res.json(result);
+
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: 'Something went wrong.' });
