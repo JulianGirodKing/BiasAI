@@ -8,6 +8,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+const PORT = process.env.PORT || 3000;
+
 app.post('/analyze', async (req, res) => {
     const article = req.body.text;
 
@@ -27,6 +29,7 @@ Do not include any text before or after the JSON.
 Article:
 ${article}
 `;
+
     try {
         const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
             method: "POST",
@@ -68,4 +71,13 @@ ${article}
         console.error(err);
         res.status(500).json({ error: 'Something went wrong.' });
     }
+});
+
+// Keep-alive route for Render
+app.get("/ping", (req, res) => {
+    res.json({ status: "awake" });
+});
+
+app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
 });
