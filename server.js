@@ -1,3 +1,13 @@
+import express from 'express';
+import cors from 'cors';
+import fetch from 'node-fetch';
+import dotenv from 'dotenv';
+dotenv.config();
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+
 app.post('/analyze', async (req, res) => {
     const article = req.body.text;
 
