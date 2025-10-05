@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 3000;
 app.post('/analyze', async (req, res) => {
     const article = req.body.text;
 
-    const prompt = `Analyze the following news article for political, ideological, or narrative bias.
+    const prompt = `Find the main news article, ignoring any sidebars, suggested stories, or adverts. Analyze it for political, ideological, or narrative bias.
 Identify the bias direction and strength, then give a short reason why.
 
 Respond ONLY with valid JSON inside triple backticks like this:
