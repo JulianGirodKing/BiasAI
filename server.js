@@ -50,21 +50,20 @@ ${article}
 
         const data = await response.json();
         let resultText = data.choices?.[0]?.message?.content || "{}";
+        console.log("Raw AI text:", resultText);
 
         console.log("AI raw output:", resultText); // DEBUG
 
-        // Extract JSON from ```json ... ``` or just { ... }
-        const jsonMatch = resultText.match(/```json\s*([\s\S]*?)\s*```/) || resultText.match(/\{[\s\S]*\}/);
-        if (jsonMatch) {
-            resultText = jsonMatch[1] || jsonMatch[0];
-        }
-
-        let result;
+        // Extract JSON object from the AI output
+        let result = { verdict: "Unknown", explanation: "No explanation available." };
         try {
-            result = JSON.parse(resultText);
+            // Match anything that looks like { ... } even if there are spaces/newlines
+            const jsonMatch = resultText.match(/\{[\s\S]*\}/);
+            if (jsonMatch) {
+                result = JSON.parse(jsonMatch[0]);
+            }
         } catch (e) {
-            console.error("Failed to parse JSON:", resultText);
-            result = { verdict: "Unknown", explanation: "No explanation available." };
+            console.error("Failed to parse JSON:", resultText, e);
         }
 
         // Send the parsed result back to the client
