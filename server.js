@@ -20,7 +20,8 @@ Respond ONLY with valid JSON inside triple backticks like this:
 \\\`\\\`\\\`json
 {
   "verdict": "Very Liberal | Moderately Liberal | Centrist | Moderately Conservative | Very Conservative",
-  "explanation": "1-2 sentence explanation of why you gave this verdict."
+  "explanation": "1-2 sentences, each mentioning specific words, phrases, or framing from the article that show the bias. Avoid generalities."
+
 }
 \\\`\\\`\\\`
 
@@ -48,6 +49,7 @@ ${article}
         });
 
         const data = await response.json();
+        console.log("Full Groq API response:", data);
         let resultText = data.choices?.[0]?.message?.content || "{}";
 
         console.log("AI raw output:", resultText); // DEBUG
