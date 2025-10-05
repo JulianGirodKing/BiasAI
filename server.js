@@ -39,7 +39,7 @@ ${article}
                 "Authorization": `Bearer ${process.env.GROQ_API_KEY}`
             },
             body: JSON.stringify({
-                model: "llama-3.3-70b-versatile",
+                model: "Llama-3-Groq-8B-Tool-Use",
                 messages: [
                     { role: "system", content: "You are an API that always returns valid JSON exactly as specified, with no extra text." },
                     { role: "user", content: prompt }
