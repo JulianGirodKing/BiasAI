@@ -14,7 +14,8 @@ app.post('/analyze', async (req, res) => {
     const article = req.body.text;
 
     const prompt = `Analyze the following news article for political, ideological, or narrative bias.
-Identify the bias direction and strength, then give a short reason why.
+Identify the bias direction and strength, then give a short reason why. Analyze only the text and use specifc examples from the text given to base your argument. 
+If you cannot come up with anything, DO NOT HALLUCINATE! Simply reply with a verdict of unknown.
 
 Respond ONLY with valid JSON inside triple backticks like this:
 \\\`\\\`\\\`json
