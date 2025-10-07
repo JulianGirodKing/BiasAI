@@ -19,7 +19,7 @@ Identify the bias direction and strength, then give a short reason why.
 Respond ONLY with valid JSON inside triple backticks like this:
 \\\`\\\`\\\`json
 {
-  "verdict": "Very Liberal | Moderately Liberal | Centrist | Moderately Conservative | Very Conservative",
+  "verdict": "Hard Left | Leans Left | Centrist | Leans Right | Hard Right",
   "explanation": "1-2 sentences, each mentioning specific words, phrases, or framing from the article that show the bias. Avoid generalities."
 
 }
