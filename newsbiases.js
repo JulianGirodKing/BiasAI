@@ -1,4 +1,4 @@
-const knownBiases = {
+const newsBiases = {
     "cnn.com": { verdict: "Leans left" },
     "nytimes.com": { verdict: "Leans left" },
     "foxnews.com": { verdict: "Right" },
