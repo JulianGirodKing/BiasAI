@@ -1,4 +1,4 @@
-import newsBiases from './newsbiases.js';
+import newsBiases from 'newsbiases.js';
 
 chrome.tabs.query({ active: true, currentWindow: true }, ([tab]) => {
     const url = new URL(tab.url);
