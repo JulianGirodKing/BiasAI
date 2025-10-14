@@ -54,3 +54,4 @@ const newsBiases = {
 
     // add more as you go!
 };
+export default newsBiases;
