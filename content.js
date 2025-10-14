@@ -7,8 +7,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             "div.article-body",
             "section.content__body",
             "div.article_content",
-
-
         ];
 
         for (const sel of selectors) {
