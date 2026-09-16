@@ -50,14 +50,18 @@ ${article}
                     messages: [
                         {
                             role: "system",
-                            content: "You are an API that always returns valid JSON exactly as specified, with no extra text."
+                            content: "You are a news-bias analysis API. Return only the requested JSON object."
                         },
                         {
                             role: "user",
                             content: prompt
                         }
                     ],
-                    temperature: 0.4
+                    temperature: 0.4,
+                    response_format: {
+                        type: "json_object"
+                    },
+                    include_reasoning: false
                 })
             }
         );
