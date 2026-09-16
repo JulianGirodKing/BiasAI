@@ -19,7 +19,6 @@ const newsBiases = {
     "dailymail.co.uk": { verdict: "Right" },
     "msnbc.com": { verdict: "Left" },
     "economist.com": { verdict: "Leans left" },
-    "theatlantic.com": { verdict: "Left" },
     "newyorker.com": { verdict: "Left" },
     "theguardian.com": { verdict: "Leans left" },
     "independent.co.uk": { verdict: "Leans left" },
