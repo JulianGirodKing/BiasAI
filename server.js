@@ -189,8 +189,14 @@ app.get("/related-articles", async (req, res) => {
         } catch (parseError) {
             console.error("GDELT returned non-JSON:", responseText);
 
-            return res.status(502).json({
-                error: "GDELT returned a non-JSON response.",
+            const isRateLimited =
+                responseText.toLowerCase().includes("limit requests") ||
+                responseText.toLowerCase().includes("rate limit");
+
+            return res.status(isRateLimited ? 429 : 502).json({
+                error: isRateLimited
+                    ? "GDELT rate limit reached."
+                    : "GDELT returned a non-JSON response.",
                 details: responseText.slice(0, 500)
             });
         }
