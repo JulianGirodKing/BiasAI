@@ -145,7 +145,8 @@ ${article}
 app.get("/ping", (req, res) => {
     res.json({ status: "awake" });
 });
-//GDELT related articles route
+
+// GDELT related articles route
 app.get("/related-articles", async (req, res) => {
     const searchQuery = req.query.query;
 
@@ -167,11 +168,32 @@ app.get("/related-articles", async (req, res) => {
         gdeltUrl.searchParams.set("sort", "datedesc");
         gdeltUrl.searchParams.set("format", "json");
 
-        const response = await fetch(gdeltUrl);
+        const response = await fetch(gdeltUrl, {
+            headers: {
+                "User-Agent": "BiasAI/1.0"
+            }
+        });
 
         console.log("GDELT status:", response.status);
 
-        const data = await response.json();
+        // Read the response as text first.
+        // GDELT can return plain text instead of JSON.
+        const responseText = await response.text();
+
+        console.log("GDELT response:", responseText.slice(0, 500));
+
+        let data;
+
+        try {
+            data = JSON.parse(responseText);
+        } catch (parseError) {
+            console.error("GDELT returned non-JSON:", responseText);
+
+            return res.status(502).json({
+                error: "GDELT returned a non-JSON response.",
+                details: responseText.slice(0, 500)
+            });
+        }
 
         if (!response.ok) {
             return res.status(response.status).json({
