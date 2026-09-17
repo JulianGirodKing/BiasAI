@@ -145,6 +145,65 @@ ${article}
 app.get("/ping", (req, res) => {
     res.json({ status: "awake" });
 });
+//GDELT related articles route
+app.get("/related-articles", async (req, res) => {
+    const searchQuery = req.query.query;
+
+    if (!searchQuery) {
+        return res.status(400).json({
+            error: "No search query provided."
+        });
+    }
+
+    try {
+        const gdeltUrl = new URL(
+            "https://api.gdeltproject.org/api/v2/doc/doc"
+        );
+
+        gdeltUrl.searchParams.set("query", searchQuery);
+        gdeltUrl.searchParams.set("mode", "artlist");
+        gdeltUrl.searchParams.set("maxrecords", "10");
+        gdeltUrl.searchParams.set("timespan", "7d");
+        gdeltUrl.searchParams.set("sort", "datedesc");
+        gdeltUrl.searchParams.set("format", "json");
+
+        const response = await fetch(gdeltUrl);
+
+        console.log("GDELT status:", response.status);
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            return res.status(response.status).json({
+                error: "GDELT API error",
+                details: data
+            });
+        }
+
+        const articles = (data.articles || []).map(article => ({
+            title: article.title || "Untitled",
+            url: article.url || "",
+            domain: article.domain || "",
+            date: article.seendate || "",
+            image: article.socialimage || ""
+        }));
+
+        res.json({
+            query: searchQuery,
+            articles: articles
+        });
+
+    } catch (error) {
+        console.error("GDELT error:", error);
+
+        res.status(500).json({
+            error: "Failed to retrieve related articles.",
+            details: error.message
+        });
+    }
+});
+
+
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
