@@ -57,11 +57,29 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (biasData.verdict) {
                         const color = getBiasColorFromVerdict(biasData.verdict);
 
-                        if (resultEl) resultEl.innerHTML =
-                            `Verdict: <span style="color: ${color}">${biasData.verdict}</span><br>
-             <em>${biasData.explanation}</em>`;
+                        const explanation =
+                            biasData?.explanation ||
+                            biasData?.description ||
+                            "No explanation provided.";
+
+                        if (resultEl) {
+                            resultEl.innerHTML = `
+                             <strong>
+                                Verdict:
+                                <span style="color: ${color}">
+                                  ${biasData.verdict}
+                                </span>
+                             </strong>
+                            <br>
+                            <span style="font-weight: normal; font-style: normal;">
+                             ${explanation}
+                             </span>
+                            `;
+                        }
                     } else {
-                        if (resultEl) resultEl.innerText = "Error: could not determine bias.";
+                        if (resultEl) {
+                            resultEl.innerText = "Error: could not determine bias.";
+                        }
                     }
 
 
