@@ -1,38 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <link rel="stylesheet" href="css/index.css">
-    <style>
-        body {
-            font-family: sans-serif;
-            padding: 10px;
-            width: 250px;
-        }
-
-        #result {
-            margin-top: 10px;
-            font-weight: bold;
-        }
-
-        #siteBias {
-            padding: 10px;
-            border-radius: 5px;
-            margin-top: 10px;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bias AI</title>
+    <link rel="stylesheet" href="popup.css">
 </head>
 
 <body>
     <h2>Bias AI</h2>
-    <button id="analyzeBtn">Analyze Article</button>
-    <p id="result"></p>
-    <strong>
-        <p id="comparison"></p>
-    </strong>
-    <script type="module" src="popup.js"></script>
-    <p id="siteBias"></p>
-</body>
 
+    <p id="siteBias">Loading sitewide bias...</p>
+
+    <button id="analyzeBtn">Analyze Article</button>
+
+    <p id="result"></p>
+
+    <p id="comparison"></p>
+
+    <hr>
+
+    <section id="relatedSection">
+        <h3>Related Coverage</h3>
+
+        <p id="relatedStatus">
+            Related articles will appear here after analysis.
+        </p>
+
+        <div id="relatedArticles"></div>
+    </section>
+
+    <script type="module" src="popup.js"></script>
+</body>
 
 </html>
